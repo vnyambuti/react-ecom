@@ -9,6 +9,7 @@ import './HomePage.css';
 
 export function HomePage() {
     const [products, setProductsData] = useState([]);
+    const [cart, setCart] = useState([]);
 
     useEffect(() => {
         axios.get('http://localhost:3000/api/products')
@@ -18,12 +19,21 @@ export function HomePage() {
             .catch((error) => {
                 console.error('Error fetching products:', error);
             });
+        axios.get('http://localhost:3000/api/cart-items')
+            .then((response) => {
+                console.log('Cart data:', response.data);
+                setCart(response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching cart:', error);
+            });
     }, []);
+
 
     return (
         <>
             <title>Home</title>
-            <HeaderComponent />
+            <HeaderComponent cart={cart} />
 
             <div className="home-page">
                 <div className="products-grid">
