@@ -12,14 +12,14 @@ export function HomePage() {
     const [cart, setCart] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/products')
+        axios.get('/products')
             .then((response) => {
                 setProductsData(response.data);
             })
             .catch((error) => {
                 console.error('Error fetching products:', error);
             });
-        axios.get('http://localhost:3000/api/cart-items')
+        axios.get('/cart-items')
             .then((response) => {
                 console.log('Cart data:', response.data);
                 setCart(response.data);
