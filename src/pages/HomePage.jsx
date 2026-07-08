@@ -2,31 +2,25 @@
 import { HeaderComponent } from '../components/HeaderComponent';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { formatMoney } from '../utils/money.js';
 import axios from 'axios';
 import './HomePage.css';
 // import { products } from '../../starting-code/data/products.js'
 
 
-export function HomePage() {
+export function HomePage({ cart }) {
     const [products, setProductsData] = useState([]);
-    const [cart, setCart] = useState([]);
+
 
     useEffect(() => {
-        axios.get('/products')
+        axios.get('/api/products')
             .then((response) => {
                 setProductsData(response.data);
             })
             .catch((error) => {
                 console.error('Error fetching products:', error);
             });
-        axios.get('/cart-items')
-            .then((response) => {
-                console.log('Cart data:', response.data);
-                setCart(response.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching cart:', error);
-            });
+
     }, []);
 
 
@@ -58,7 +52,7 @@ export function HomePage() {
                                 </div>
 
                                 <div className="product-price">
-                                    ${(product.priceCents / 100).toFixed(2)}
+                                    {formatMoney(product.priceCents)}
                                 </div>
 
                                 <div className="product-quantity-container">
