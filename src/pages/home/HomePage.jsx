@@ -8,7 +8,7 @@ import './HomePage.css';
 // import { products } from '../../starting-code/data/products.js'
 
 
-export function HomePage({ cart }) {
+export function HomePage({ cart, LoadCartItems }) {
     const [products, setProductsData] = useState([]);
 
 
@@ -32,7 +32,7 @@ export function HomePage({ cart }) {
             <HeaderComponent cart={cart} />
 
             <div className="home-page">
-                <ProductPage products={products} />
+                <ProductPage products={products} LoadCartItems={LoadCartItems} />
             </div>
         </>
     );
