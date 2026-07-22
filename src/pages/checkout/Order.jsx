@@ -1,13 +1,15 @@
 import { formatMoney } from "../../utils/money.js";
 
 import days from "dayjs";
+import { DeliveryOption } from "./DeliveryOption.jsx";
 
-export function OrderPage({ deliveryOption, cart }) {
+export function OrderPage({ deliveryOptions, cart, LoadCartItems }) {
+
     return (
         <>
             <div className="order-summary">
-                {deliveryOption.length > 0 && cart.map((item) => {
-                    const selectedDeliveryOption = deliveryOption.find((option) => { return option.id === item.deliveryOptionId });
+                {deliveryOptions.length > 0 && cart.map((item) => {
+                    const selectedDeliveryOption = deliveryOptions.find((option) => { return option.id === item.deliveryOptionId });
                     return (
                         <div key={item.id} className="cart-item-container">
                             <div className="delivery-date">
@@ -38,36 +40,7 @@ export function OrderPage({ deliveryOption, cart }) {
                                     </div>
                                 </div>
 
-                                <div className="delivery-options">
-                                    <div className="delivery-options-title">
-                                        Choose a delivery option:
-                                    </div>
-                                    {
-                                        deliveryOption.map((option) => {
-                                            let priceString = 'FREE SHIPPING';
-                                            if (option.priceCents > 0) {
-                                                priceString = `${formatMoney(option.priceCents)} - shipping`;
-                                            }
-                                            return (
-                                                <div key={option.id} className="delivery-option">
-                                                    <input type="radio" checked={option.id === item.deliveryOptionId}
-                                                        className="delivery-option-input"
-                                                        name={`delivery-option-${item.productId}`} />
-                                                    <div>
-                                                        <div className="delivery-option-date">
-                                                            {days(option.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
-                                                        </div>
-                                                        <div className="delivery-option-price">
-                                                            {priceString}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })}
-
-
-
-                                </div>
+                                <DeliveryOption item={item} deliveryOptions={deliveryOptions} LoadCartItems={LoadCartItems} />
                             </div>
                         </div>
                     )

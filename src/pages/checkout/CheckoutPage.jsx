@@ -6,8 +6,8 @@ import axios from 'axios';
 import { OrderPage } from './Order.jsx';
 import { PaymentPage } from './Payment.jsx';
 import { Link } from 'react-router'
-export function CheckoutPage({ cart }) {
-    const [deliveryOption, setDeliveryOption] = useState([]);
+export function CheckoutPage({ cart, LoadCartItems }) {
+    const [deliveryOptions, setDeliveryOption] = useState([]);
     const [paymentSummary, setPaymentSummary] = useState(null);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ export function CheckoutPage({ cart }) {
         }
 
         getDeliveryOptions();
-    }, []);
+    }, [cart]);
 
     return (
         <>
@@ -53,7 +53,7 @@ export function CheckoutPage({ cart }) {
                 <div className="page-title">Review your order</div>
 
                 <div className="checkout-grid">
-                    <OrderPage deliveryOption={deliveryOption} cart={cart} />
+                    <OrderPage deliveryOptions={deliveryOptions} cart={cart} LoadCartItems={LoadCartItems} />
                     {paymentSummary && (
                         <>
                             <PaymentPage paymentSummary={paymentSummary} />
